@@ -1,0 +1,38 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/product_sans_family</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.CustomHeaderText" parent="AppTheme.AppBarOverlay">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="AppTheme.CardViewText" parent="Widget.MaterialComponents.CardView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BottomAppBarStyle" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="AppTheme" />
+    <style name="AppTheme.PopupOverlay" parent="AppTheme" />
+
+    <style name="ProgressDialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Please Wait...</item>
+        <item name="DialogSpotColor">@color/colorAccent</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+</resources>

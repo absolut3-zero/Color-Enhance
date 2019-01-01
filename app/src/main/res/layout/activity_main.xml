@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/appbar_padding_top"
+            app:elevation="0dp">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:elevation="0.0dp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+            <TextView
+                    android:id="@+id/header_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/header_text_size"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/textView_status"
+                    android:textSize="@dimen/status_text_size"
+                    android:textColor="@color/black"/>
+            <TextView
+                    android:id="@+id/textView_enabledStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Enabled"
+                    android:textSize="@dimen/enable_text_size"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin"
+                    app:strokeWidth="@dimen/card_stroke_width"
+                    app:strokeColor="@color/lightGrey"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clickable="true">
+                    <TextView
+                            android:id="@+id/textView_selectPreset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:paddingTop="@dimen/card_content_padding"
+                            android:paddingStart="@dimen/card_content_padding"
+                            android:paddingEnd="@dimen/card_content_padding"
+                            android:text="@string/textView_selectPreset"
+                            android:textSize="@dimen/card_header"
+                            android:textColor="@color/black"/>
+                    <TextView
+                            android:id="@+id/textView_selectPreset_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/textView_selectPreset"
+                            android:padding="@dimen/card_content_padding"
+                            android:text="@string/textView_selectPreset_description"/>
+
+                    <ImageView
+                            android:id="@+id/imageView_cardExpand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:paddingStart="@dimen/card_content_padding"
+                            android:paddingEnd="@dimen/card_content_padding"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_down_grey_24dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin"
+                    app:strokeWidth="@dimen/card_stroke_width"
+                    app:strokeColor="@color/lightGrey"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clickable="true">
+                    <TextView
+                            android:id="@+id/textView_backup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:paddingTop="@dimen/card_content_padding"
+                            android:paddingStart="@dimen/card_content_padding"
+                            android:paddingEnd="@dimen/card_content_padding"
+                            android:text="@string/textView_backup"
+                            android:textSize="@dimen/card_header"
+                            android:textColor="@color/black"/>
+                    <TextView
+                            android:id="@+id/textView_backup_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/textView_backup"
+                            android:padding="@dimen/card_content_padding"
+                            android:text="@string/textView_backup_description"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin"
+                    app:strokeWidth="@dimen/card_stroke_width"
+                    app:strokeColor="@color/lightGrey"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clickable="true">
+                    <TextView
+                            android:id="@+id/textView_restore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:paddingTop="@dimen/card_content_padding"
+                            android:paddingStart="@dimen/card_content_padding"
+                            android:paddingEnd="@dimen/card_content_padding"
+                            android:text="@string/textView_restore"
+                            android:textSize="@dimen/card_header"
+                            android:textColor="@color/black"/>
+                    <TextView
+                            android:id="@+id/textView_restore_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/textView_restore"
+                            android:padding="@dimen/card_content_padding"
+                            android:text="@string/textView_restore_description"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:elevation="8.0dp"
+            android:theme="@style/BottomAppBarStyle"
+            app:backgroundTint="@color/colorAccent"
+            app:fabAlignmentMode="end"
+            app:fabCradleVerticalOffset="10dp"
+            app:hideOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="12.0dp"
+            android:src="@drawable/ic_colorize_white_24dp"
+            app:layout_anchor="@id/bottomAppBar"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

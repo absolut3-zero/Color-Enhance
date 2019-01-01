@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="appbar_padding_top">8.0dp</dimen>
+    <dimen name="header_text_size">20.0sp</dimen>
+    <dimen name="status_text_size">30.0sp</dimen>
+    <dimen name="enable_text_size">30.0sp</dimen>
+    <dimen name="card_margin">12.0dp</dimen>
+    <dimen name="card_stroke_width">1.0dp</dimen>
+    <dimen name="card_corner_radius">6.0dp</dimen>
+    <dimen name="card_content_padding">12.0dp</dimen>
+    <dimen name="card_header">20.0sp</dimen>
+</resources>

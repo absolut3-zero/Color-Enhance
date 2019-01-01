@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Color Enhance</string>
+    <!--Main Activity-->
+    <string name="textView_status">Status :</string>
+    <string name="textView_selectPreset">Select Preset</string>
+    <string name="textView_selectPreset_description">Select a preset to apply</string>
+    <string name="textView_backup">Backup</string>
+    <string name="textView_backup_description">Backup current settings</string>
+    <string name="textView_restore">Restore</string>
+    <string name="textView_restore_description">Restore backed up settings</string>
+    <!--Dialog-->
+    <string name="dialog_title_no_root">No Root access</string>
+    <string name="dialog_description_no_root">Root is required for Color Enhance to work.</string>
+    <string name="dialog_title_no_kcal">No KCAL support</string>
+    <string name="dialog_description_no_kcal">Your Kernel does not support KCAL, it is required for Color Enhance to
+        work.
+    </string>
+</resources>
