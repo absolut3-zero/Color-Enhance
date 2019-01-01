@@ -12,6 +12,26 @@ class DummyKCALManager : KCALInterface {
         get() = intArrayOf(0, 0, 0)
         set(value) {}
 
+    override var rgbMultiplier: Int
+        get() = 0
+        set(value) {}
+
+    override var saturationIntensity: Int
+        get() = 0
+        set(value) {}
+
+    override var hue: Int
+        get() = 0
+        set(value) {}
+
+    override var screenValue: Int
+        get() = 0
+        set(value) {}
+
+    override var contrast: Int
+        get() = 0
+        set(value) {}
+
     override val getImplementationName = "Dummy KCAL Manager"
 
     override val getImplementationSwitchPath = "Not available"

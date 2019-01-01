@@ -8,6 +8,11 @@ class GenericKCALManager : KCALInterface {
     // File paths
     private val KCAL_SWITCH = "/sys/devices/platform/kcal_ctrl.0/kcal_enable"
     private val KCAL_COLOR = "/sys/devices/platform/kcal_ctrl.0/kcal"
+    private val MIN_RGB_MULIPLIER = "/sys/devices/platform/kcal_ctrl.0/kcal_min"
+    private val SAT_INTENSITY = "/sys/devices/platform/kcal_ctrl.0/kcal_sat"
+    private val HUE = "/sys/devices/platform/kcal_ctrl.0/kcal_hue"
+    private val SCREEN_VAL = "/sys/devices/platform/kcal_ctrl.0/kcal_val"
+    private val CONTRAST = "/sys/devices/platform/kcal_ctrl.0/kcal_cont"
 
     override val isSupported: Boolean = File(KCAL_SWITCH).exists() || Root.doesFileExist(KCAL_SWITCH)
 
@@ -33,6 +38,37 @@ class GenericKCALManager : KCALInterface {
             Root.writeToFile("${value[0]} ${value[1]} ${value[2]}", KCAL_COLOR)
         }
 
+    override var rgbMultiplier: Int
+        get() = Root.readOneLine(MIN_RGB_MULIPLIER).toInt()
+        set(value) {
+            Root.writeToFile("$value", MIN_RGB_MULIPLIER)
+        }
+
+    override var saturationIntensity: Int
+        get() = Root.readOneLine(SAT_INTENSITY).toInt()
+        set(value) {
+            Root.writeToFile("$value", SAT_INTENSITY)
+        }
+
+    override var hue: Int
+        get() = Root.readOneLine(HUE).toInt()
+        set(value) {
+            Root.writeToFile("$value", HUE)
+        }
+
+    override var screenValue: Int
+        get() = Root.readOneLine(SCREEN_VAL).toInt()
+        set(value) {
+            Root.writeToFile("$value", SCREEN_VAL)
+        }
+
+    override var contrast: Int
+        get() = Root.readOneLine(CONTRAST).toInt()
+        set(value) {
+            Root.writeToFile("$value", CONTRAST)
+        }
+
+    
     override val getImplementationName = "Generic KCAL"
 
     override val getImplementationSwitchPath = KCAL_SWITCH

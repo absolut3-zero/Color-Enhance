@@ -15,4 +15,10 @@
     <string name="dialog_description_no_kcal">Your Kernel does not support KCAL, it is required for Color Enhance to
         work.
     </string>
+    <!--Backup-->
+    <string name="failed_to_backup">Failed to Backup!</string>
+    <string name="backup_successful">Backup Successful</string>
+    <!--Restore-->
+    <string name="restore_failed">Restore failed!</string>
+    <string name="restore_successful">Restored successfully</string>
 </resources>

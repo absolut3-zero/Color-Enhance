@@ -3,11 +3,16 @@ package xyz.z3ro.colorenhance.utilities.kcal
 import xyz.z3ro.colorenhance.utilities.Root
 import java.io.File
 
-class SD845KCALManager : KCALInterface {
+class NewKCALManager : KCALInterface {
     // File paths
     private val KCAL_RED = "/sys/module/msm_drm/parameters/kcal_red"
     private val KCAL_GREEN = "/sys/module/msm_drm/parameters/kcal_green"
     private val KCAL_BLUE = "/sys/module/msm_drm/parameters/kcal_blue"
+
+    private val SAT_INTENSITY = "/sys/module/msm_drm/parameters/kcal_sat"
+    private val HUE = "/sys/module/msm_drm/parameters/kcal_hue"
+    private val SCREEN_VAL = "/sys/module/msm_drm/parameters/kcal_val"
+    private val CONTRAST = "/sys/module/msm_drm/parameters/kcal_cont"
 
     override val isSupported: Boolean
         get() = (File(KCAL_RED).exists() || Root.doesFileExist(KCAL_RED)) && (File(KCAL_GREEN).exists() || Root.doesFileExist(
@@ -31,6 +36,34 @@ class SD845KCALManager : KCALInterface {
                 listOf(value[0].toString(), value[1].toString(), value[2].toString()),
                 listOf(KCAL_RED, KCAL_GREEN, KCAL_BLUE)
             )
+        }
+
+    override var rgbMultiplier: Int
+        get() = 0
+        set(value) {}
+
+    override var saturationIntensity: Int
+        get() = Root.readOneLine(SAT_INTENSITY).toInt()
+        set(value) {
+            Root.writeToFile("$value", SAT_INTENSITY)
+        }
+
+    override var hue: Int
+        get() = Root.readOneLine(HUE).toInt()
+        set(value) {
+            Root.writeToFile("$value", HUE)
+        }
+
+    override var screenValue: Int
+        get() = Root.readOneLine(SCREEN_VAL).toInt()
+        set(value) {
+            Root.writeToFile("$value", SCREEN_VAL)
+        }
+
+    override var contrast: Int
+        get() = Root.readOneLine(CONTRAST).toInt()
+        set(value) {
+            Root.writeToFile("$value", CONTRAST)
         }
 
     override val getImplementationName = "KCAL for v4.4 kernels"

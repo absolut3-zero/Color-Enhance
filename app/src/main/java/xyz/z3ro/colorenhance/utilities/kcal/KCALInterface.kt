@@ -8,6 +8,16 @@ interface KCALInterface {
 
     var colors: IntArray
 
+    var rgbMultiplier: Int
+
+    var saturationIntensity: Int
+
+    var hue: Int
+
+    var screenValue: Int
+
+    var contrast: Int
+
     val getImplementationName: String
     val getImplementationSwitchPath: String
     val getImplementationFilePaths: String

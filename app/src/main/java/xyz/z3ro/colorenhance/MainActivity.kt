@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.z3ro.colorenhance.utilities.Constants
+import xyz.z3ro.colorenhance.utilities.Operations
 import xyz.z3ro.colorenhance.utilities.PreferenceHelper
 import xyz.z3ro.colorenhance.utilities.Root
 import xyz.z3ro.colorenhance.utilities.kcal.KCALManager
@@ -23,17 +24,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fabInitialisation() {
-        floatingActionButton_apply.setOnClickListener { }
+        floatingActionButton_apply.setOnClickListener {
+            val destinationDirectory = getExternalFilesDir("backups")
+            Operations.backup(destinationDirectory!!.absolutePath, this)
+        }
     }
+
 
     private inner class CompatibilityChecker : AsyncTask<Void, Void, String>() {
         internal var rootAccessAvailable = false
         internal var kcalSupported = false
-//        val progressDialog: AlertDialog = SpotsDialog.Builder().setContext(this@MainActivity)
-//            .setCancelable(false).setTheme(R.style.ProgressDialog).build()
 
         override fun onPreExecute() {
-//            progressDialog.show()
+
         }
 
         override fun doInBackground(vararg p0: Void?): String? {
@@ -43,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: String?) {
-//            progressDialog.dismiss()
-
             if (!rootAccessAvailable) {
                 showAlertDialog(R.string.dialog_title_no_root, R.string.dialog_description_no_root)
             } else if (!kcalSupported) {
