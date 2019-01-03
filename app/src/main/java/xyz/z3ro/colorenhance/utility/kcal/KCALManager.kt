@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.utilities.kcal
+package xyz.z3ro.colorenhance.utility.kcal
 
 object KCALManager {
     var kcalImplementation: KCALInterface

@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.utilities
+package xyz.z3ro.colorenhance.utility
 
 import android.content.Context
 import android.preference.PreferenceManager

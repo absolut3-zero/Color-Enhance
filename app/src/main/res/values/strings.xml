@@ -16,6 +16,8 @@
         work.
     </string>
     <!--Backup-->
+    <string name="backup_dialog_title">Backup Name</string>
+    <string name="backup_name_hint">Enter a name for backup&#8230;</string>
     <string name="failed_to_backup">Failed to Backup!</string>
     <string name="backup_successful">Backup Successful</string>
     <!--Restore-->

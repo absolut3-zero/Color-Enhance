@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.utilities
+package xyz.z3ro.colorenhance.utility
 
 import android.app.AlertDialog
 import android.content.Context
@@ -6,7 +6,7 @@ import android.os.AsyncTask
 import android.widget.Toast
 import dmax.dialog.SpotsDialog
 import xyz.z3ro.colorenhance.R
-import xyz.z3ro.colorenhance.utilities.kcal.KCALManager
+import xyz.z3ro.colorenhance.utility.kcal.KCALManager
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.*

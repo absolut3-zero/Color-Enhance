@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/CustomDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@string/backup_dialog_title"
+            android:textAppearance="@style/TextAppearance.DialogTitle"/>
+
+    <EditText
+            android:id="@+id/editText_backupDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:hint="@string/backup_name_hint"
+            android:textAppearance="@style/TextAppearance.DialogContent"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/button_backupDialog_cancel"
+                style="@style/Widget.BorderlessButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@android:string/cancel"/>
+
+        <Button
+                android:id="@+id/button_backupDialog_ok"
+                style="@style/Widget.RaisedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@android:string/ok"/>
+
+    </LinearLayout>
+
+</LinearLayout>

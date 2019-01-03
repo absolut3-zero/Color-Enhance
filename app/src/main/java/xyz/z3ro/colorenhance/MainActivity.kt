@@ -3,33 +3,90 @@ package xyz.z3ro.colorenhance
 import android.app.AlertDialog
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import xyz.z3ro.colorenhance.utilities.Constants
-import xyz.z3ro.colorenhance.utilities.Operations
-import xyz.z3ro.colorenhance.utilities.PreferenceHelper
-import xyz.z3ro.colorenhance.utilities.Root
-import xyz.z3ro.colorenhance.utilities.kcal.KCALManager
+import xyz.z3ro.colorenhance.customview.BackupDialog
+import xyz.z3ro.colorenhance.utility.Constants
+import xyz.z3ro.colorenhance.utility.PreferenceHelper
+import xyz.z3ro.colorenhance.utility.Root
+import xyz.z3ro.colorenhance.utility.kcal.KCALManager
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CompatibilityChecker().execute()
-        fabInitialisation()
+        cardView_preset.setOnClickListener(this)
+        cardView_backup.setOnClickListener(this)
+        cardView_restore.setOnClickListener(this)
+        floatingActionButton_apply.setOnClickListener(this)
 
     }
 
-    private fun fabInitialisation() {
-        floatingActionButton_apply.setOnClickListener {
-            val destinationDirectory = getExternalFilesDir("backups")
-            Operations.backup(destinationDirectory!!.absolutePath, this)
+    override fun onStart() {
+        super.onStart()
+        CompatibilityChecker().execute()
+    }
+
+    fun backup() {
+
+    }
+
+    override fun onClick(view: View?) {
+        if (view != null) {
+            when (view.id) {
+                R.id.cardView_preset -> {
+                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
+                    Log.d("lol", "LOL")
+                }
+
+                R.id.cardView_backup -> {
+                    val backupDialog = BackupDialog(this)
+                    backupDialog.show()
+                }
+
+                R.id.cardView_restore -> {
+                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
+                    Log.d("lol", "LOL")
+                }
+
+                R.id.floatingActionButton_apply -> {
+                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        findViewById(R.id.main_layout),
+                        R.string.restore_failed,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                else -> {
+                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
+//    private fun CompatibilityChecker() {
+//        var rootAccess = false
+//        var kcalSupport = false
+//
+//        val rootAccessCheck = Thread(Runnable { rootAccess = Root.rootAccess })
+//        rootAccessCheck.priority = Thread.NORM_PRIORITY
+//
+//        val kcalSupportCheck = Thread(Runnable { kcalSupport = KCALManager.isKCALAvailable })
+//        kcalSupportCheck.priority = Thread.NORM_PRIORITY
+//
+//        rootAccessCheck.start()
+//        kcalSupportCheck.start()
+//    }
 
     private inner class CompatibilityChecker : AsyncTask<Void, Void, String>() {
         internal var rootAccessAvailable = false
@@ -41,6 +98,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg p0: Void?): String? {
             rootAccessAvailable = Root.rootAccess
+//            val kcalSupportThread = Thread(Runnable { kcalSupported = KCALManager.isKCALAvailable })
+//            kcalSupportThread.priority = Thread.NORM_PRIORITY
+//            kcalSupportThread.start()
             kcalSupported = KCALManager.isKCALAvailable
             return null
         }

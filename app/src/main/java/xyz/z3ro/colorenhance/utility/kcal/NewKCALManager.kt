@@ -1,6 +1,6 @@
-package xyz.z3ro.colorenhance.utilities.kcal
+package xyz.z3ro.colorenhance.utility.kcal
 
-import xyz.z3ro.colorenhance.utilities.Root
+import xyz.z3ro.colorenhance.utility.Root
 import java.io.File
 
 class NewKCALManager : KCALInterface {

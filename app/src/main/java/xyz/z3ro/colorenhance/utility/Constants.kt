@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.utilities
+package xyz.z3ro.colorenhance.utility
 
 object Constants {
 //    const val SHARED_PREF_FILE = "xyz.z3ro.colorenhance.PREFERENCES_FILE"

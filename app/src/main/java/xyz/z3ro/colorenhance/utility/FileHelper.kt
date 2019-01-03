@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.utilities
+package xyz.z3ro.colorenhance.utility
 
 import java.io.*
 
