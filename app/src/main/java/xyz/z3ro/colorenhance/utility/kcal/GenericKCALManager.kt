@@ -68,7 +68,7 @@ class GenericKCALManager : KCALInterface {
             Root.writeToFile("$value", CONTRAST)
         }
 
-    
+
     override val getImplementationName = "Generic KCAL"
 
     override val getImplementationSwitchPath = KCAL_SWITCH

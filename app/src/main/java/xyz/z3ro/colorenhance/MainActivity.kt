@@ -8,10 +8,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import xyz.z3ro.colorenhance.customview.BackupDialog
+import xyz.z3ro.colorenhance.customview.BackupDialogFragment
 import xyz.z3ro.colorenhance.utility.Constants
+import xyz.z3ro.colorenhance.utility.Operations
 import xyz.z3ro.colorenhance.utility.PreferenceHelper
 import xyz.z3ro.colorenhance.utility.Root
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         CompatibilityChecker().execute()
+
     }
 
     fun backup() {
@@ -48,8 +49,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.cardView_backup -> {
-                    val backupDialog = BackupDialog(this)
-                    backupDialog.show()
+                    val backupDialogFragment = BackupDialogFragment()
+                    backupDialogFragment.show(supportFragmentManager.beginTransaction(), BackupDialogFragment.TAG)
                 }
 
                 R.id.cardView_restore -> {
@@ -59,16 +60,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.floatingActionButton_apply -> {
-                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
-                    Snackbar.make(
-                        findViewById(R.id.main_layout),
-                        R.string.restore_failed,
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
+//                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
+//                    Snackbar.make(
+//                        findViewById(R.id.main_layout),
+//                        R.string.restore_failed,
+//                        Snackbar.LENGTH_LONG
+//                    ).show()
 
-                else -> {
-                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
+//                    Operations.backup(getExternalFilesDir("backups")!!.absolutePath, this)
                 }
             }
         }

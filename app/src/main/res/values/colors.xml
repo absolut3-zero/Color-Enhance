@@ -13,4 +13,5 @@
 
     <color name="white">#fff</color>
     <color name="highlight_light">#33ffffff</color>
+    <color name="scrim">#33000000</color>
 </resources>

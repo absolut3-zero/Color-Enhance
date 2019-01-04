@@ -1,33 +1,37 @@
 package xyz.z3ro.colorenhance.utility
 
-import eu.chainfire.libsuperuser.Shell
+import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.io.SuFile
 
 object Root {
 
     val rootAccess: Boolean
-        get() = Shell.SU.available()
+        get() = Shell.rootAccess()
 
     fun writeToFile(text: String, file: String): Boolean {
         val command = "echo \"$text\" > $file"
-        Shell.SU.run(command)
 
-        return rootAccess
+        return Shell.su(command).exec().isSuccess
     }
 
     fun writeToMultipleFiles(text: List<String>, files: List<String>): Boolean {
         if (text.size != files.size)
-            return Shell.SU.available()
+            return Shell.rootAccess()
 
         var command = ""
 
         for (i in text.indices) {
             command += "echo\"${text[i]}\" > ${files[i]} &&"
         }
-        return rootAccess
+
+        command = command.substring(0, command.lastIndexOf(" &&"))
+        Shell.su(command)
+
+        return Shell.su(command).exec().isSuccess
     }
 
-    fun readContents(file: String): List<String>? {
-        return Shell.SU.run("cat $file")
+    private fun readContents(file: String): List<String>? {
+        return Shell.su("cat $file").exec().out
     }
 
     fun readOneLine(file: String): String {
@@ -36,7 +40,8 @@ object Root {
     }
 
     fun doesFileExist(file: String): Boolean {
-        val output = Shell.SU.run("ls $file")
-        return output != null && !output.isEmpty() && output[0] == file
+        return SuFile(file).exists()
+//        val output = Shell.su("ls $file").exec().out
+//        return output != null && !output.isEmpty() && output[0] == file
     }
 }

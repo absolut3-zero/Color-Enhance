@@ -9,7 +9,6 @@ import xyz.z3ro.colorenhance.R
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
 import java.io.File
 import java.lang.ref.WeakReference
-import java.util.*
 
 object Operations {
 
@@ -42,8 +41,8 @@ object Operations {
 //        return false
 //    }
 
-    fun backup(destinationDirectory: String, context: Context) {
-        BackupTask(context).execute(destinationDirectory)
+    fun backup(context: Context, backupDirectory: String, destinationDirectory: String) {
+        BackupTask(context).execute(backupDirectory, destinationDirectory)
     }
 
     private class BackupTask(context: Context) : AsyncTask<String, Void, Boolean>() {
@@ -60,8 +59,7 @@ object Operations {
         override fun doInBackground(vararg destinationDirectory: String?): Boolean {
             if (!KCALManager.kcalEnabled) return false
             var returnValue = false
-            val now: Calendar = Calendar.getInstance()
-            val backupDirectory = File(destinationDirectory[0], now.time.toString())
+            val backupDirectory = File(destinationDirectory[0], destinationDirectory[1])
             if (FileHelper.createDirectory(backupDirectory)) {
                 for (path in paths) {
                     val readings = Root.readOneLine(path)
