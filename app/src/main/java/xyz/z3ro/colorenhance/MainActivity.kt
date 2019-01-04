@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.z3ro.colorenhance.customview.BackupDialogFragment
+import xyz.z3ro.colorenhance.fragment.RestoreFragment
 import xyz.z3ro.colorenhance.utility.Constants
-import xyz.z3ro.colorenhance.utility.Operations
 import xyz.z3ro.colorenhance.utility.PreferenceHelper
 import xyz.z3ro.colorenhance.utility.Root
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
@@ -54,9 +54,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.cardView_restore -> {
-                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
-                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
-                    Log.d("lol", "LOL")
+                    val restoreFragment = RestoreFragment()
+                    val fragmentManager = supportFragmentManager.beginTransaction()
+                    fragmentManager.setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                    fragmentManager.add(R.id.main_layout, restoreFragment, RestoreFragment.TAG)
+                    fragmentManager.commit()
                 }
 
                 R.id.floatingActionButton_apply -> {

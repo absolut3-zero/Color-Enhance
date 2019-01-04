@@ -21,6 +21,7 @@
     <string name="failed_to_backup">Failed to Backup!</string>
     <string name="backup_successful">Backup Successful</string>
     <!--Restore-->
+    <string name="restore">Restore</string>
     <string name="restore_failed">Restore failed!</string>
     <string name="restore_successful">Restored successfully</string>
 </resources>

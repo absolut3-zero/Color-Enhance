@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.res.ResourcesCompat
 import xyz.z3ro.colorenhance.R
 
-class CustomDimDialog(context: Context?) : AppCompatDialog(context, R.style.Theme_Dialog) {
+class CustomDimDialog(context: Context?) : AppCompatDialog(context, R.style.Theme_Dialog_Backup) {
 
     init {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)

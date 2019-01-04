@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.dialog_backup.view.*
 import xyz.z3ro.colorenhance.R
 import xyz.z3ro.colorenhance.utility.Operations
@@ -14,12 +13,12 @@ import java.util.*
 class BackupDialogFragment : AppCompatDialogFragment() {
 
     companion object {
-        val TAG = "BackupDialog"
+        const val TAG = "BackupDialog"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Theme_Dialog)
+        setStyle(AppCompatDialogFragment.STYLE_NO_FRAME, R.style.Theme_Dialog_Backup)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

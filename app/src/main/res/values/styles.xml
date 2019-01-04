@@ -66,7 +66,7 @@
         <item name="android:paddingBottom">12dp</item>
     </style>
 
-    <style name="Theme.Dialog" parent="@style/Theme.MaterialComponents.Light.Dialog">
+    <style name="Theme.Dialog.Backup" parent="@style/Theme.MaterialComponents.Light.Dialog">
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
@@ -80,6 +80,10 @@
 
     <style name="TextAppearance.Body" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Theme.Dialog.Restore" parent="@style/Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="ProgressDialog">
