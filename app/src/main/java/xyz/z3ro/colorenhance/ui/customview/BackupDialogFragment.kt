@@ -1,4 +1,4 @@
-package xyz.z3ro.colorenhance.customview
+package xyz.z3ro.colorenhance.ui.customview
 
 import android.os.Bundle
 import android.view.LayoutInflater

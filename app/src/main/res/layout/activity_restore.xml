@@ -5,9 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:fitsSystemWindows="true"
-        tools:context=".MainActivity">
+        tools:context=".ui.activity.RestoreActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar_restore"
@@ -26,6 +25,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
                     app:elevation="0.0dp"
+                    app:navigationIcon="@drawable/ic_close_grey_24dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
             <TextView
@@ -34,8 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@string/restore"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp"/>
 
         </RelativeLayout>
 
@@ -48,12 +47,11 @@
             android:scrollbars="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton_restore_apply"
+    <TextView
+            android:id="@+id/textVIew_nothingToShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="24dp"
-            android:elevation="12.0dp"
-            android:src="@drawable/ic_colorize_white_24dp"/>
+            android:layout_gravity="center"
+            android:text="@string/nothing_to_restore"
+            android:textSize="16sp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

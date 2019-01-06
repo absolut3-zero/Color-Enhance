@@ -13,13 +13,13 @@ import java.lang.ref.WeakReference
 object Operations {
 
     // File paths
-    private val KCAL_SWITCH = "/sys/devices/platform/kcal_ctrl.0/kcal_enable"
-    private val KCAL_COLOR = "/sys/devices/platform/kcal_ctrl.0/kcal"
-    private val MIN_RGB_MULIPLIER = "/sys/devices/platform/kcal_ctrl.0/kcal_min"
-    private val SAT_INTENSITY = "/sys/devices/platform/kcal_ctrl.0/kcal_sat"
-    private val HUE = "/sys/devices/platform/kcal_ctrl.0/kcal_hue"
-    private val SCREEN_VAL = "/sys/devices/platform/kcal_ctrl.0/kcal_val"
-    private val CONTRAST = "/sys/devices/platform/kcal_ctrl.0/kcal_cont"
+    private const val KCAL_SWITCH = "/sys/devices/platform/kcal_ctrl.0/kcal_enable"
+    private const val KCAL_COLOR = "/sys/devices/platform/kcal_ctrl.0/kcal"
+    private const val MIN_RGB_MULIPLIER = "/sys/devices/platform/kcal_ctrl.0/kcal_min"
+    private const val SAT_INTENSITY = "/sys/devices/platform/kcal_ctrl.0/kcal_sat"
+    private const val HUE = "/sys/devices/platform/kcal_ctrl.0/kcal_hue"
+    private const val SCREEN_VAL = "/sys/devices/platform/kcal_ctrl.0/kcal_val"
+    private const val CONTRAST = "/sys/devices/platform/kcal_ctrl.0/kcal_cont"
 
     private val paths: List<String> = listOf(
         KCAL_SWITCH, KCAL_COLOR, MIN_RGB_MULIPLIER, SAT_INTENSITY, HUE, SCREEN_VAL,
@@ -41,8 +41,8 @@ object Operations {
 //        return false
 //    }
 
-    fun backup(context: Context, backupDirectory: String, destinationDirectory: String) {
-        BackupTask(context).execute(backupDirectory, destinationDirectory)
+    fun backup(context: Context, backupsDirectory: String, backupDirectoryName: String) {
+        BackupTask(context).execute(backupsDirectory, backupDirectoryName)
     }
 
     private class BackupTask(context: Context) : AsyncTask<String, Void, Boolean>() {
@@ -56,15 +56,15 @@ object Operations {
             progressDialog.show()
         }
 
-        override fun doInBackground(vararg destinationDirectory: String?): Boolean {
+        override fun doInBackground(vararg backupDirectory: String?): Boolean {
             if (!KCALManager.kcalEnabled) return false
             var returnValue = false
-            val backupDirectory = File(destinationDirectory[0], destinationDirectory[1])
-            if (FileHelper.createDirectory(backupDirectory)) {
+            val backupDirectoryName = File(backupDirectory[0], backupDirectory[1])
+            if (FileHelper.createDirectory(backupDirectoryName)) {
                 for (path in paths) {
                     val readings = Root.readOneLine(path)
                     val fileName = File(path).name
-                    val destinationFilePath = File(backupDirectory, fileName).absolutePath
+                    val destinationFilePath = File(backupDirectoryName, fileName).absolutePath
                     returnValue = FileHelper.copy(destinationFilePath, readings)
                     if (!returnValue) break
                 }
@@ -84,8 +84,8 @@ object Operations {
     }
 
 
-    fun restore(targetDirect: String, context: Context) {
-        RestoreTask(context).execute(targetDirect)
+    fun restore(context: Context, sourceDirectory: String) {
+        RestoreTask(context).execute(sourceDirectory)
     }
 
     private class RestoreTask(context: Context) : AsyncTask<String, Void, Boolean>() {
@@ -99,9 +99,8 @@ object Operations {
             progressDialog.show()
         }
 
-        override fun doInBackground(vararg targetDirectory: String?): Boolean {
-
-            return false
+        override fun doInBackground(vararg sourceDirectory: String?): Boolean {
+            return Root.writeMultipleFiles(FileHelper.filesToRestore(sourceDirectory[0]!!), paths)
         }
 
         override fun onPostExecute(result: Boolean?) {

@@ -6,7 +6,7 @@ object FileHelper {
 
     fun copy(absoluteDestinationPath: String, content: String): Boolean {
         if (createFile(absoluteDestinationPath)) {
-            return copyContent(absoluteDestinationPath, content)
+            return copyContentBackup(absoluteDestinationPath, content)
         }
         return false
     }
@@ -17,7 +17,7 @@ object FileHelper {
         return false
     }
 
-    private fun copyContent(absoluteDestinationPath: String, content: String): Boolean {
+    private fun copyContentBackup(absoluteDestinationPath: String, content: String): Boolean {
         val inputStream: InputStream = ByteArrayInputStream(content.toByteArray(Charsets.UTF_8))
         val outputStream: OutputStream = FileOutputStream(absoluteDestinationPath)
         var returnValue = false
@@ -35,7 +35,25 @@ object FileHelper {
         return returnValue
     }
 
+    fun filesToRestore(absoluteSourcePath: String): List<String> {
+        val content = mutableListOf<String>()
+
+        File(absoluteSourcePath).list().forEach { content.add(File(absoluteSourcePath, it).absolutePath) }
+        return content
+    }
+
     fun createDirectory(directory: File): Boolean {
         return directory.mkdirs()
+    }
+
+    fun list(path: String): ArrayList<String> {
+        val directoryList = ArrayList<String>()
+        val backupPath = File(path)
+
+        if (backupPath.list().isNotEmpty()) {
+            backupPath.list().forEach { directoryList.add(it) }
+        }
+
+        return directoryList
     }
 }

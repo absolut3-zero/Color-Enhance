@@ -1,6 +1,7 @@
-package xyz.z3ro.colorenhance
+package xyz.z3ro.colorenhance.ui.activity
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import kotlinx.android.synthetic.main.activity_main.*
-import xyz.z3ro.colorenhance.customview.BackupDialogFragment
-import xyz.z3ro.colorenhance.fragment.RestoreFragment
+import xyz.z3ro.colorenhance.R
+import xyz.z3ro.colorenhance.ui.customview.BackupDialogFragment
 import xyz.z3ro.colorenhance.utility.Constants
 import xyz.z3ro.colorenhance.utility.PreferenceHelper
 import xyz.z3ro.colorenhance.utility.Root
@@ -32,11 +33,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         CompatibilityChecker().execute()
-
-    }
-
-    fun backup() {
-
     }
 
     override fun onClick(view: View?) {
@@ -54,40 +50,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.cardView_restore -> {
-                    val restoreFragment = RestoreFragment()
-                    val fragmentManager = supportFragmentManager.beginTransaction()
-                    fragmentManager.setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                    fragmentManager.add(R.id.main_layout, restoreFragment, RestoreFragment.TAG)
-                    fragmentManager.commit()
+                    val restoreIntent = Intent(this, RestoreActivity::class.java)
+                    startActivity(restoreIntent)
                 }
 
                 R.id.floatingActionButton_apply -> {
-//                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
-//                    Snackbar.make(
-//                        findViewById(R.id.main_layout),
-//                        R.string.restore_failed,
-//                        Snackbar.LENGTH_LONG
-//                    ).show()
 
-//                    Operations.backup(getExternalFilesDir("backups")!!.absolutePath, this)
                 }
             }
         }
     }
 
-//    private fun CompatibilityChecker() {
-//        var rootAccess = false
-//        var kcalSupport = false
-//
-//        val rootAccessCheck = Thread(Runnable { rootAccess = Root.rootAccess })
-//        rootAccessCheck.priority = Thread.NORM_PRIORITY
-//
-//        val kcalSupportCheck = Thread(Runnable { kcalSupport = KCALManager.isKCALAvailable })
-//        kcalSupportCheck.priority = Thread.NORM_PRIORITY
-//
-//        rootAccessCheck.start()
-//        kcalSupportCheck.start()
-//    }
 
     private inner class CompatibilityChecker : AsyncTask<Void, Void, String>() {
         internal var rootAccessAvailable = false
@@ -99,18 +72,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun doInBackground(vararg p0: Void?): String? {
             rootAccessAvailable = Root.rootAccess
-//            val kcalSupportThread = Thread(Runnable { kcalSupported = KCALManager.isKCALAvailable })
-//            kcalSupportThread.priority = Thread.NORM_PRIORITY
-//            kcalSupportThread.start()
             kcalSupported = KCALManager.isKCALAvailable
             return null
         }
 
         override fun onPostExecute(result: String?) {
             if (!rootAccessAvailable) {
-                showAlertDialog(R.string.dialog_title_no_root, R.string.dialog_description_no_root)
+                showAlertDialog(
+                    R.string.dialog_title_no_root,
+                    R.string.dialog_description_no_root
+                )
             } else if (!kcalSupported) {
-                showAlertDialog(R.string.dialog_title_no_kcal, R.string.dialog_description_no_kcal)
+                showAlertDialog(
+                    R.string.dialog_title_no_kcal,
+                    R.string.dialog_description_no_kcal
+                )
             } else {
                 PreferenceHelper.putBoolean(this@MainActivity, Constants.COMPATIBILITY_CHECK, true)
             }
