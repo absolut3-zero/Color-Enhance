@@ -16,6 +16,7 @@ import xyz.z3ro.colorenhance.utility.Constants
 import xyz.z3ro.colorenhance.utility.FileHelper
 import java.util.*
 
+
 class RestoreActivity : AppCompatActivity() {
 
     companion object {
@@ -30,7 +31,7 @@ class RestoreActivity : AppCompatActivity() {
 
         setupToolbar()
         getRestoreList()
-        setAdapter()
+        setRecyclerView()
 
     }
 
@@ -44,7 +45,7 @@ class RestoreActivity : AppCompatActivity() {
         if (restoreList.isNotEmpty()) textVIew_nothingToShow.visibility = View.GONE
     }
 
-    private fun setAdapter() {
+    private fun setRecyclerView() {
         if (restoreList.isNotEmpty()) {
             val restoreAdapter = RestoreAdapter(
                 restoreList,
@@ -56,6 +57,19 @@ class RestoreActivity : AppCompatActivity() {
             recyclerView_restore.addItemDecoration(dividerItemDecoration)
             recyclerView_restore.adapter = restoreAdapter
             recyclerView_restore.setItemViewCacheSize(2)
+
+            recyclerView_restore.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (recyclerView.canScrollVertically(Constants.SCROLL_DIRECTION_UP))
+                        appBar_restore.setElevation(8.0F)
+                    else
+                        appBar_restore.setElevation(0.0F)
+                }
+            })
         }
     }
 

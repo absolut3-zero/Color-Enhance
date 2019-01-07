@@ -99,16 +99,6 @@
                             android:padding="@dimen/card_content_padding"
                             android:text="@string/textView_selectPreset_description"/>
 
-                    <ImageView
-                            android:id="@+id/imageView_cardExpand"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:paddingStart="@dimen/card_content_padding"
-                            android:paddingEnd="@dimen/card_content_padding"
-                            android:clickable="false"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_down_grey_24dp"/>
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -17,6 +17,10 @@
 
     </style>
 
+    <style name="AppTheme.Preset" parent="AppTheme">
+
+    </style>
+
     <style name="AppTheme.CustomHeaderText" parent="AppTheme.AppBarOverlay">
         <item name="android:textColor">@color/grey</item>
     </style>

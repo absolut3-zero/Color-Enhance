@@ -27,4 +27,7 @@
     <string name="restore_dialog_detail">Are you sure you want to restore \"%1$s\" ?</string>
     <string name="restore_failed">Restore failed!</string>
     <string name="restore_successful">Restored successfully</string>
+    <!--Presets-->
+    <string name="presets">Presets</string>
+    <string name="no_connection">No Internet Connection</string>
 </resources>

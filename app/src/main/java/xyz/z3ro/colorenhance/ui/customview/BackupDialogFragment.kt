@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import kotlinx.android.synthetic.main.dialog_backup.view.*
 import xyz.z3ro.colorenhance.R
 import xyz.z3ro.colorenhance.utility.Operations
+import java.lang.StringBuilder
 import java.util.*
 
 class BackupDialogFragment : AppCompatDialogFragment() {
@@ -51,6 +52,8 @@ class BackupDialogFragment : AppCompatDialogFragment() {
 
     private fun defaultName(): String {
         val now: Calendar = Calendar.getInstance()
-        return now.time.toString()
+        var name = StringBuilder(now.time.toString())
+        name.delete(20,29)
+        return name.toString()
     }
 }

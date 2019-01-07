@@ -4,9 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,9 +37,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (view != null) {
             when (view.id) {
                 R.id.cardView_preset -> {
-                    Toast.makeText(this, "lol", Toast.LENGTH_SHORT).show()
-                    Toast.makeText(this, "lmao", Toast.LENGTH_SHORT).show()
-                    Log.d("lol", "LOL")
+                    val presetIntent = Intent(this, PresetActivity::class.java)
+                    startActivityForResult(presetIntent, Constants.PRESET_ACTIVITY_REQ_CODE)
                 }
 
                 R.id.cardView_backup -> {

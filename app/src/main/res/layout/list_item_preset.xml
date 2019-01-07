@@ -9,18 +9,18 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true">
     <ImageView
-            android:id="@+id/imageView_restoreListBullet"
+            android:id="@+id/imageView_presetListBullet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            app:srcCompat="@drawable/ic_chevron_right_grey_24dp"/>
+            app:srcCompat="@drawable/ic_cloud_circle_black_24dp"/>
 
     <TextView
-            android:id="@+id/textView_restoreName"
+            android:id="@+id/textView_presetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/imageView_restoreListBullet"
-            android:layout_toEndOf="@id/imageView_restoreListBullet"
+            android:layout_alignTop="@id/imageView_presetListBullet"
+            android:layout_toEndOf="@id/imageView_presetListBullet"
+            android:layout_marginStart="12dp"
             android:singleLine="true"
             android:ellipsize="end"
             android:maxLines="1"
