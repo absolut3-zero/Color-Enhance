@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "895014962273",
+    "firebase_url": "https://colorenhance-b355d.firebaseio.com",
+    "project_id": "colorenhance-b355d",
+    "storage_bucket": "colorenhance-b355d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895014962273:android:025c6da9c5a0a9ea",
+        "android_client_info": {
+          "package_name": "xyz.z3ro.colorenhance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895014962273-u1ut094m089kp0jdfjum1k98cbi62k2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.z3ro.colorenhance",
+            "certificate_hash": "03f4b52ec2cc93c8399b9dec0ad17c4c415e07e8"
+          }
+        },
+        {
+          "client_id": "895014962273-42qibbducm4thgf2pagims583vfujhpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuX6_YfsnrFNda41Mp8urXujRMTkb_6J0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895014962273-42qibbducm4thgf2pagims583vfujhpe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

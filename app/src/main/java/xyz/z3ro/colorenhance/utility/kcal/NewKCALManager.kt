@@ -32,7 +32,7 @@ class NewKCALManager : KCALInterface {
             )
         }
         set(value) {
-            Root.writeToMultipleFiles(
+            Root.writeToFiles(
                 listOf(value[0].toString(), value[1].toString(), value[2].toString()),
                 listOf(KCAL_RED, KCAL_GREEN, KCAL_BLUE)
             )
@@ -45,25 +45,25 @@ class NewKCALManager : KCALInterface {
     override var saturationIntensity: Int
         get() = Root.readOneLine(SAT_INTENSITY).toInt()
         set(value) {
-            Root.writeToFile("$value", SAT_INTENSITY)
+            Root.writeToSingleFile("$value", SAT_INTENSITY)
         }
 
     override var hue: Int
         get() = Root.readOneLine(HUE).toInt()
         set(value) {
-            Root.writeToFile("$value", HUE)
+            Root.writeToSingleFile("$value", HUE)
         }
 
     override var screenValue: Int
         get() = Root.readOneLine(SCREEN_VAL).toInt()
         set(value) {
-            Root.writeToFile("$value", SCREEN_VAL)
+            Root.writeToSingleFile("$value", SCREEN_VAL)
         }
 
     override var contrast: Int
         get() = Root.readOneLine(CONTRAST).toInt()
         set(value) {
-            Root.writeToFile("$value", CONTRAST)
+            Root.writeToSingleFile("$value", CONTRAST)
         }
 
     override val getImplementationName = "KCAL for v4.4 kernels"

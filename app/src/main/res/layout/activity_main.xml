@@ -184,7 +184,21 @@
             app:fabAlignmentMode="end"
             app:fabCradleVerticalOffset="10dp"
             app:hideOnScroll="true"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            app:layout_scrollFlags="scroll|enterAlways">
+
+        <TextView
+                android:id="@+id/textView_selectedPreset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:paddingBottom="24dp"
+                android:elevation="12.0dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/white"/>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton_apply"

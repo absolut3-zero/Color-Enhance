@@ -19,8 +19,8 @@ class GenericKCALManager : KCALInterface {
     override var enabled: Boolean
         get() = Root.readOneLine(KCAL_SWITCH) == "1"
         set(value) {
-            if (value) Root.writeToFile("1", KCAL_SWITCH)
-            else Root.writeToFile("0", KCAL_SWITCH)
+            if (value) Root.writeToSingleFile("1", KCAL_SWITCH)
+            else Root.writeToSingleFile("0", KCAL_SWITCH)
         }
 
     override var colors: IntArray
@@ -35,37 +35,37 @@ class GenericKCALManager : KCALInterface {
             )
         }
         set(value) {
-            Root.writeToFile("${value[0]} ${value[1]} ${value[2]}", KCAL_COLOR)
+            Root.writeToSingleFile("${value[0]} ${value[1]} ${value[2]}", KCAL_COLOR)
         }
 
     override var rgbMultiplier: Int
         get() = Root.readOneLine(MIN_RGB_MULIPLIER).toInt()
         set(value) {
-            Root.writeToFile("$value", MIN_RGB_MULIPLIER)
+            Root.writeToSingleFile("$value", MIN_RGB_MULIPLIER)
         }
 
     override var saturationIntensity: Int
         get() = Root.readOneLine(SAT_INTENSITY).toInt()
         set(value) {
-            Root.writeToFile("$value", SAT_INTENSITY)
+            Root.writeToSingleFile("$value", SAT_INTENSITY)
         }
 
     override var hue: Int
         get() = Root.readOneLine(HUE).toInt()
         set(value) {
-            Root.writeToFile("$value", HUE)
+            Root.writeToSingleFile("$value", HUE)
         }
 
     override var screenValue: Int
         get() = Root.readOneLine(SCREEN_VAL).toInt()
         set(value) {
-            Root.writeToFile("$value", SCREEN_VAL)
+            Root.writeToSingleFile("$value", SCREEN_VAL)
         }
 
     override var contrast: Int
         get() = Root.readOneLine(CONTRAST).toInt()
         set(value) {
-            Root.writeToFile("$value", CONTRAST)
+            Root.writeToSingleFile("$value", CONTRAST)
         }
 
 

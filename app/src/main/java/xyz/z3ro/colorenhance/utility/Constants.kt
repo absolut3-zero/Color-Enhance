@@ -9,5 +9,7 @@ object Constants {
 
     const val PRESET_ACTIVITY_REQ_CODE = 777
 
+    const val PRESET_INTENT_EXTRA_CODE = "kcal"
+
     const val SCROLL_DIRECTION_UP = -1
 }

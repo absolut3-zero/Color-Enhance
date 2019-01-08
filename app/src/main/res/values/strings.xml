@@ -8,6 +8,7 @@
     <string name="textView_backup_description">Backup current settings</string>
     <string name="textView_restore">Restore</string>
     <string name="textView_restore_description">Restore backed up settings</string>
+    <string name="no_preset_selected">No Preset Selected to Apply!</string>
     <!--Dialog-->
     <string name="dialog_title_no_root">No Root access</string>
     <string name="dialog_description_no_root">Root is required for Color Enhance to work.</string>
@@ -30,4 +31,6 @@
     <!--Presets-->
     <string name="presets">Presets</string>
     <string name="no_connection">No Internet Connection</string>
+    <string name="preset_failed">Failed to apply!</string>
+    <string name="preset_successful">Applied Successfully</string>
 </resources>

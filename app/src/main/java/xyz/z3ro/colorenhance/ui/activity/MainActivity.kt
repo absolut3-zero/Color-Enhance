@@ -1,21 +1,29 @@
 package xyz.z3ro.colorenhance.ui.activity
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.z3ro.colorenhance.R
+import xyz.z3ro.colorenhance.model.KCAL
 import xyz.z3ro.colorenhance.ui.customview.BackupDialogFragment
 import xyz.z3ro.colorenhance.utility.Constants
+import xyz.z3ro.colorenhance.utility.Operations
 import xyz.z3ro.colorenhance.utility.PreferenceHelper
 import xyz.z3ro.colorenhance.utility.Root
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var kcal: KCAL? = null
+
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +60,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.floatingActionButton_apply -> {
-
+                    setUpFAB()
                 }
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            Constants.PRESET_ACTIVITY_REQ_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    setBottomAppBar(data)
+                }
+            }
+        }
+    }
+
+    private fun setBottomAppBar(data: Intent?) {
+        if (data != null) kcal = data.getParcelableExtra(Constants.PRESET_INTENT_EXTRA_CODE)
+        textView_selectedPreset.text = kcal?.name
+    }
+
+    private fun setUpFAB() {
+        if (kcal == null) {
+            Toast.makeText(this, R.string.no_preset_selected, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Operations.presetApply(this, kcal!!)
+    }
 
     private inner class CompatibilityChecker : AsyncTask<Void, Void, String>() {
         internal var rootAccessAvailable = false

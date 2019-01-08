@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.widget.Toast
 import dmax.dialog.SpotsDialog
 import xyz.z3ro.colorenhance.R
+import xyz.z3ro.colorenhance.model.KCAL
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
 import java.io.File
 import java.lang.ref.WeakReference
@@ -26,20 +27,6 @@ object Operations {
         CONTRAST
     )
 
-//    private fun backupOperation(destinationDirectory: String): Boolean {
-//        if (!KCALManager.kcalEnabled) return false
-//        val now: Calendar = Calendar.getInstance()
-//        val backupDirectory = File(destinationDirectory, now.time.toString())
-//        if (FileHelper.createDirectory(backupDirectory)) {
-//            for (path in paths) {
-//                val readings = Root.readOneLine(path)
-//                val fileName = File(path).name
-//                val destinationFilePath = File(backupDirectory, fileName).absolutePath
-//                FileHelper.copy(destinationFilePath, readings)
-//            }
-//        }
-//        return false
-//    }
 
     fun backup(context: Context, backupsDirectory: String, backupDirectoryName: String) {
         BackupTask(context).execute(backupsDirectory, backupDirectoryName)
@@ -100,7 +87,7 @@ object Operations {
         }
 
         override fun doInBackground(vararg sourceDirectory: String?): Boolean {
-            return Root.writeMultipleFiles(FileHelper.filesToRestore(sourceDirectory[0]!!), paths)
+            return Root.restoreMultipleFiles(FileHelper.filesToRestore(sourceDirectory[0]!!), paths)
         }
 
         override fun onPostExecute(result: Boolean?) {
@@ -112,5 +99,39 @@ object Operations {
                 Toast.makeText(contextWeakReference.get(), R.string.restore_failed, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun presetApply(context: Context, kcal: KCAL) {
+        PresetApplyTask(context).execute(kcal)
+    }
+
+    private class PresetApplyTask(context: Context) : AsyncTask<KCAL, Void, Boolean>() {
+        private val contextWeakReference: WeakReference<Context> = WeakReference(context)
+
+        private val progressDialog: AlertDialog = SpotsDialog.Builder().setContext(contextWeakReference.get())
+            .setCancelable(false).setTheme(R.style.ProgressDialog).build()
+
+        override fun onPreExecute() {
+            progressDialog.show()
+        }
+
+        override fun doInBackground(vararg kcal: KCAL?): Boolean {
+            return Root.writeToFiles(FileHelper.kcalToList(kcal[0]!!), paths)
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            progressDialog.dismiss()
+            if (result!!) Toast.makeText(
+                contextWeakReference.get(),
+                R.string.preset_successful,
+                Toast.LENGTH_SHORT
+            ).show()
+            else Toast.makeText(
+                contextWeakReference.get(),
+                R.string.preset_failed,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
     }
 }

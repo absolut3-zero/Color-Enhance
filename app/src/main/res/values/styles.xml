@@ -96,7 +96,7 @@
 
     <style name="ProgressDialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText">Please Wait...</item>
+        <item name="DialogTitleText"> </item>
         <item name="DialogSpotColor">@color/colorAccent</item>
         <item name="DialogSpotCount">4</item>
     </style>

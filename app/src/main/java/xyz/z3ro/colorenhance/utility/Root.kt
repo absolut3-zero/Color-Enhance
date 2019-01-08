@@ -5,6 +5,7 @@ import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.io.SuFile
 import com.topjohnwu.superuser.io.SuFileInputStream
 import com.topjohnwu.superuser.io.SuFileOutputStream
+import java.io.ByteArrayInputStream
 import java.io.IOException
 
 object Root {
@@ -12,30 +13,7 @@ object Root {
     val rootAccess: Boolean
         get() = Shell.rootAccess()
 
-    fun writeToFile(text: String, file: String): Boolean {
-        val command = "echo \"$text\" > $file"
-
-        return Shell.su(command).exec().isSuccess
-    }
-
-    fun writeToMultipleFiles(text: List<String>, files: List<String>): Boolean {
-        if (text.size != files.size)
-            return Shell.rootAccess()
-
-        var command = ""
-
-        for (i in text.indices) {
-            command += "echo \"${text[i]}\" > ${files[i]} && "
-        }
-
-        command = command.substring(0, command.lastIndexOf(" && "))
-
-        val returnValue = Shell.su(command).exec().isSuccess
-
-        return returnValue
-    }
-
-    private fun writeSingleFile(inputFileAbsolutePath: String, outputFileAbsolutePath: String): Boolean {
+    private fun restoreSingleFile(inputFileAbsolutePath: String, outputFileAbsolutePath: String): Boolean {
         val inputFile = SuFile(inputFileAbsolutePath)
         val outputFile = SuFile(outputFileAbsolutePath)
 
@@ -55,11 +33,38 @@ object Root {
         return returnValue
     }
 
-    fun writeMultipleFiles(inputFilesAbsolutePath: List<String>, outputFilesAbsolutePath: List<String>): Boolean {
+    fun restoreMultipleFiles(inputFilesAbsolutePath: List<String>, outputFilesAbsolutePath: List<String>): Boolean {
         var success = false
 
         for (i in inputFilesAbsolutePath.indices) {
-            success = writeSingleFile(inputFilesAbsolutePath[i], outputFilesAbsolutePath[i])
+            success = restoreSingleFile(inputFilesAbsolutePath[i], outputFilesAbsolutePath[i])
+            if (!success) break
+        }
+
+        return success
+    }
+
+    fun writeToSingleFile(content: String, file: String): Boolean {
+        val inputStream = ByteArrayInputStream(content.toByteArray(Charsets.UTF_8))
+        val outputStream = SuFileOutputStream(SuFile(file))
+
+        var success = true
+
+        try {
+            ShellUtils.pump(inputStream, outputStream)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            success = false
+        }
+
+        return success
+    }
+
+    fun writeToFiles(contents: List<String>, files: List<String>): Boolean {
+        var success = false
+
+        for (i in contents.indices) {
+            success = writeToSingleFile(contents[i], files[i])
             if (!success) break
         }
 

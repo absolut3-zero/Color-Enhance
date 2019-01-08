@@ -65,9 +65,9 @@ class RestoreActivity : AppCompatActivity() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     if (recyclerView.canScrollVertically(Constants.SCROLL_DIRECTION_UP))
-                        appBar_restore.setElevation(8.0F)
+                        appBar_restore.elevation = 8.0F
                     else
-                        appBar_restore.setElevation(0.0F)
+                        appBar_restore.elevation = 0.0F
                 }
             })
         }

@@ -1,5 +1,6 @@
 package xyz.z3ro.colorenhance.utility
 
+import xyz.z3ro.colorenhance.model.KCAL
 import java.io.*
 
 object FileHelper {
@@ -55,5 +56,17 @@ object FileHelper {
         }
 
         return directoryList
+    }
+
+    fun kcalToList(kcal: KCAL): List<String> {
+        return listOf(
+            kcal.switch,
+            kcal.rgb,
+            kcal.rgbMultiplier,
+            kcal.saturationIntensity,
+            kcal.hue,
+            kcal.screenValue,
+            kcal.contrast
+        )
     }
 }
