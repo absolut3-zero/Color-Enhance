@@ -2,6 +2,11 @@
     <string name="app_name">Color Enhance</string>
     <!--Main Activity-->
     <string name="textView_status">Status :</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="preset_applied_name">\"%1$s\" applied</string>
+    <string name="textView_mainSwitch">Main Switch</string>
+    <string name="textView_mainSwitch_description">Toggle Color Enhance On/Off</string>
     <string name="textView_selectPreset">Select Preset</string>
     <string name="textView_selectPreset_description">Select a preset to apply</string>
     <string name="textView_backup">Backup</string>

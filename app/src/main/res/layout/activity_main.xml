@@ -62,10 +62,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Enabled"
                     android:textSize="@dimen/enable_text_size"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/textView_presetApplied"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/header_text_size"
+                    android:textColor="@color/black"/>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView_mainSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin"
+                    app:strokeWidth="@dimen/card_stroke_width"
+                    app:strokeColor="@color/lightGrey"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="?attr/selectableItemBackground">
+                    <TextView
+                            android:id="@+id/textView_mainSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:paddingTop="@dimen/card_content_padding"
+                            android:paddingStart="@dimen/card_content_padding"
+                            android:paddingEnd="@dimen/card_content_padding"
+                            android:text="@string/textView_mainSwitch"
+                            android:textSize="@dimen/card_header"
+                            android:textColor="@color/black"/>
+                    <TextView
+                            android:id="@+id/textView_mainSwitch_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/textView_mainSwitch"
+                            android:padding="@dimen/card_content_padding"
+                            android:text="@string/textView_mainSwitch_description"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_mainSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="12dp"/>
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_preset"
@@ -181,7 +231,7 @@
             android:elevation="8.0dp"
             android:theme="@style/BottomAppBarStyle"
             app:backgroundTint="@color/colorAccent"
-            app:fabAlignmentMode="end"
+            app:fabAlignmentMode="center"
             app:fabCradleVerticalOffset="10dp"
             app:hideOnScroll="true"
             app:layout_scrollFlags="scroll|enterAlways">
@@ -191,7 +241,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
-                android:paddingBottom="24dp"
+                android:paddingBottom="20dp"
                 android:elevation="12.0dp"
                 android:ellipsize="end"
                 android:maxLines="1"

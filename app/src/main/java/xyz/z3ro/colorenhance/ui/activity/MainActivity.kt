@@ -1,14 +1,20 @@
 package xyz.z3ro.colorenhance.ui.activity
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.animation.addListener
+import androidx.core.view.ViewCompat
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.z3ro.colorenhance.R
 import xyz.z3ro.colorenhance.model.KCAL
@@ -26,19 +32,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        collapseBottomAppBar()
 
         cardView_preset.setOnClickListener(this)
         cardView_backup.setOnClickListener(this)
         cardView_restore.setOnClickListener(this)
         floatingActionButton_apply.setOnClickListener(this)
+        switch_mainSwitch.setOnClickListener(this)
 
     }
 
     override fun onStart() {
         super.onStart()
         CompatibilityChecker().execute()
+
+        val enabled = PreferenceHelper.getBoolean(this, Constants.MAIN_SWITCH, false)
+        setMainSwitch(enabled)
+        setEnabled(enabled)
+        setFAB(enabled)
     }
 
     override fun onClick(view: View?) {
@@ -60,8 +74,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 R.id.floatingActionButton_apply -> {
-                    setUpFAB()
+                    fabOnClick()
                 }
+
+                R.id.switch_mainSwitch -> {
+                    if (PreferenceHelper.getBoolean(this, Constants.MAIN_SWITCH, false)) {
+                        PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, false)
+                        // Disable
+
+                        setEnabled(false)
+                        setFAB(false)
+                    } else {
+                        if (!PreferenceHelper.getBoolean(this, Constants.ENABLED_STATUS, false)) {
+                            Toast.makeText(this, R.string.no_preset_selected, Toast.LENGTH_SHORT).show()
+                            setMainSwitch(false)
+                        } else {
+                            PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, true)
+                            // Enable
+                            setEnabled(true)
+                            setFAB(true)
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -72,23 +107,60 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (requestCode) {
             Constants.PRESET_ACTIVITY_REQ_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    setBottomAppBar(data)
+                    kcal = data!!.getParcelableExtra(Constants.PRESET_INTENT_EXTRA_CODE)
+                    setBottomAppBar()
                 }
             }
         }
     }
 
-    private fun setBottomAppBar(data: Intent?) {
-        if (data != null) kcal = data.getParcelableExtra(Constants.PRESET_INTENT_EXTRA_CODE)
-        textView_selectedPreset.text = kcal?.name
+    private fun setMainSwitch(enabled: Boolean) {
+        switch_mainSwitch.isChecked = enabled
     }
 
-    private fun setUpFAB() {
+    private fun setBottomAppBar() {
+        textView_selectedPreset.text = kcal?.name ?: ""
+    }
+
+    private fun fabOnClick() {
         if (kcal == null) {
             Toast.makeText(this, R.string.no_preset_selected, Toast.LENGTH_SHORT).show()
             return
         }
         Operations.presetApply(this, kcal!!)
+
+        PreferenceHelper.putBoolean(this, Constants.ENABLED_STATUS, true)
+        PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, true)
+        setMainSwitch(true)
+        setEnabled(true)
+        setFAB(true)
+
+        kcal = null
+        setBottomAppBar()
+    }
+
+    private fun setFAB(enable: Boolean) {
+        if (enable) {
+            bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+        } else bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+    }
+
+    private fun setEnabled(enable: Boolean) {
+        if (enable) {
+            textView_enabledStatus.text = getString(R.string.enabled)
+            if (PreferenceHelper.getString(this, Constants.PRESET_APPLIED_NAME, "").equals("")) {
+                textView_presetApplied.visibility = View.GONE
+            } else {
+                val text = getString(
+                    R.string.preset_applied_name,
+                    PreferenceHelper.getString(this, Constants.PRESET_APPLIED_NAME, "")
+                )
+                textView_presetApplied.text = text
+            }
+        } else {
+            textView_enabledStatus.text = getString(R.string.disabled)
+            textView_presetApplied.visibility = View.GONE
+        }
     }
 
     private inner class CompatibilityChecker : AsyncTask<Void, Void, String>() {
@@ -129,5 +201,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         builder.setMessage(msg)
         builder.setPositiveButton(android.R.string.ok) { _, _ -> finish() }
         builder.show()
+    }
+
+    private fun collapseBottomAppBar() {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)
+        val appbarHeight = TypedValue.complexToDimension(typedValue.data, resources.displayMetrics)
+
+        val valueAnimator = ValueAnimator.ofInt(180, appbarHeight.toInt())
+        valueAnimator.addUpdateListener {
+            val layoutParameters: ViewGroup.LayoutParams = bottomAppBar.layoutParams
+            layoutParameters.height = it.animatedValue as Int
+            bottomAppBar.layoutParams = layoutParameters
+        }
+
+        valueAnimator.start()
+        valueAnimator.addListener {
+            ViewCompat.animate(floatingActionButton_apply).setStartDelay(2000).setDuration(2000).scaleY(1.0F)
+                .scaleX(1.0F)
+                .start()
+        }
     }
 }

@@ -13,6 +13,10 @@
         <item name="android:colorBackground">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <style name="AppTheme.Restore" parent="AppTheme">
 
     </style>
@@ -96,7 +100,7 @@
 
     <style name="ProgressDialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText"> </item>
+        <item name="DialogTitleText"></item>
         <item name="DialogSpotColor">@color/colorAccent</item>
         <item name="DialogSpotCount">4</item>
     </style>
