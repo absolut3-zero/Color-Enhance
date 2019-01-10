@@ -38,4 +38,12 @@
     <string name="no_connection">No Internet Connection</string>
     <string name="preset_failed">Failed to apply!</string>
     <string name="preset_successful">Applied Successfully</string>
+    <!--Menu-->
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <!--Settings-->
+    <string name="apply_on_boot">Apply on Boot</string>
+    <string name="apply_on_boot_description">Automatically apply selected preset after device boots.</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_description">Show notifications when new presets are available.</string>
 </resources>

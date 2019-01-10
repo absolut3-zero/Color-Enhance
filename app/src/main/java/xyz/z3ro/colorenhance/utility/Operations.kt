@@ -27,6 +27,41 @@ object Operations {
         CONTRAST
     )
 
+    fun defaultBackup(context: Context, backupDirectory: String, backupDirectoryName: String) {
+        DefaultBackupTask(context).execute(backupDirectory, backupDirectoryName)
+    }
+
+    private class DefaultBackupTask(context: Context) : AsyncTask<String, Void, Boolean>() {
+
+        private val contextWeakReference: WeakReference<Context> = WeakReference(context)
+
+        override fun doInBackground(vararg backupDirectory: String?): Boolean {
+            if (!KCALManager.kcalEnabled) return false
+            var returnValue = false
+            val backupDirectoryName = File(backupDirectory[0], backupDirectory[1])
+            if (backupDirectoryName.exists()) {
+                backupDirectoryName.deleteRecursively()
+            }
+            if (FileHelper.createDirectory(backupDirectoryName)) {
+                for (path in paths) {
+                    val readings = Root.readOneLine(path)
+                    val fileName = File(path).name
+                    val destinationFilePath = File(backupDirectoryName, fileName).absolutePath
+                    returnValue = FileHelper.copy(destinationFilePath, readings)
+                    if (!returnValue) break
+                }
+            }
+            return returnValue
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            if (result!!) {
+                PreferenceHelper.putBoolean(contextWeakReference.get(), Constants.FIRST_RUN, false)
+            } else {
+                PreferenceHelper.putBoolean(contextWeakReference.get(), Constants.FIRST_RUN, true)
+            }
+        }
+    }
 
     fun backup(context: Context, backupsDirectory: String, backupDirectoryName: String) {
         BackupTask(context).execute(backupsDirectory, backupDirectoryName)
@@ -101,6 +136,17 @@ object Operations {
         }
     }
 
+    fun restoreBackground(sourceDirectory: String) {
+        RestoreBackgroundTask().execute(sourceDirectory)
+    }
+
+    private class RestoreBackgroundTask() : AsyncTask<String, Void, Boolean>() {
+
+        override fun doInBackground(vararg sourceDirectory: String?): Boolean {
+            return Root.restoreMultipleFiles(FileHelper.filesToRestore(sourceDirectory[0]!!), paths)
+        }
+    }
+
     fun presetApply(context: Context, kcal: KCAL) {
         PresetApplyTask(context).execute(kcal)
     }
@@ -121,12 +167,18 @@ object Operations {
 
         override fun onPostExecute(result: Boolean?) {
             progressDialog.dismiss()
-            if (result!!) Toast.makeText(
-                contextWeakReference.get(),
-                R.string.preset_successful,
-                Toast.LENGTH_SHORT
-            ).show()
-            else Toast.makeText(
+            if (result!!) {
+                Toast.makeText(
+                    contextWeakReference.get(),
+                    R.string.preset_successful,
+                    Toast.LENGTH_SHORT
+                ).show()
+                defaultBackup(
+                    contextWeakReference.get()!!,
+                    PreferenceHelper.getString(contextWeakReference.get(), Constants.TEMP_FOLDER, "")!!,
+                    "Current Preset"
+                )
+            } else Toast.makeText(
                 contextWeakReference.get(),
                 R.string.preset_failed,
                 Toast.LENGTH_SHORT

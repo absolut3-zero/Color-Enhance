@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="xyz.z3ro.colorenhance">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
             android:name="com.topjohnwu.superuser.ContainerApp"
@@ -40,6 +41,34 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activity.SettingsActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="xyz.z3ro.colorenhance.SETTINGS"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.AboutActivity"
+                  android:theme="@style/AppTheme"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="xyz.z3ro.colorenhance.ABOUT"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".broadcastreceiver.BootCompletedReceiver" android:enabled="true"
+                  android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

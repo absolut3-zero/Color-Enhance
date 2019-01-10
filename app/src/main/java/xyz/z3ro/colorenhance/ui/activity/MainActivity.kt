@@ -3,10 +3,15 @@ package xyz.z3ro.colorenhance.ui.activity
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -24,6 +29,7 @@ import xyz.z3ro.colorenhance.utility.Operations
 import xyz.z3ro.colorenhance.utility.PreferenceHelper
 import xyz.z3ro.colorenhance.utility.Root
 import xyz.z3ro.colorenhance.utility.kcal.KCALManager
+import java.io.File
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -37,6 +43,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 //        collapseBottomAppBar()
 
+        setSupportActionBar(bottomAppBar)
+
         cardView_preset.setOnClickListener(this)
         cardView_backup.setOnClickListener(this)
         cardView_restore.setOnClickListener(this)
@@ -49,10 +57,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
         CompatibilityChecker().execute()
 
+        createNotificationChannel()
+
         val enabled = PreferenceHelper.getBoolean(this, Constants.MAIN_SWITCH, false)
         setMainSwitch(enabled)
         setEnabled(enabled)
         setFAB(enabled)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_bottom_app_bar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.settings -> {
+                val settingsIntent = Intent(this, SettingsActivity::class.java)
+                startActivity(settingsIntent)
+            }
+
+            R.id.about -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onClick(view: View?) {
@@ -81,7 +110,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     if (PreferenceHelper.getBoolean(this, Constants.MAIN_SWITCH, false)) {
                         PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, false)
                         // Disable
-
+                        Operations.restore(
+                            this,
+                            File(getExternalFilesDir("Temp")!!.absolutePath, "Default Backup").absolutePath
+                        )
                         setEnabled(false)
                         setFAB(false)
                     } else {
@@ -91,6 +123,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         } else {
                             PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, true)
                             // Enable
+                            Operations.restore(
+                                this,
+                                File(getExternalFilesDir("Temp")!!.absolutePath, "Current Preset").absolutePath
+                            )
                             setEnabled(true)
                             setFAB(true)
                         }
@@ -131,6 +167,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         PreferenceHelper.putBoolean(this, Constants.ENABLED_STATUS, true)
         PreferenceHelper.putBoolean(this, Constants.MAIN_SWITCH, true)
+        PreferenceHelper.putString(this, Constants.PRESET_APPLIED_NAME, kcal?.name ?: "")
         setMainSwitch(true)
         setEnabled(true)
         setFAB(true)
@@ -151,6 +188,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (PreferenceHelper.getString(this, Constants.PRESET_APPLIED_NAME, "").equals("")) {
                 textView_presetApplied.visibility = View.GONE
             } else {
+                textView_presetApplied.visibility = View.VISIBLE
                 val text = getString(
                     R.string.preset_applied_name,
                     PreferenceHelper.getString(this, Constants.PRESET_APPLIED_NAME, "")
@@ -190,6 +228,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 )
             } else {
                 PreferenceHelper.putBoolean(this@MainActivity, Constants.COMPATIBILITY_CHECK, true)
+
+                if (PreferenceHelper.getBoolean(this@MainActivity, Constants.FIRST_RUN, true)) {
+                    PreferenceHelper.putString(
+                        this@MainActivity,
+                        Constants.TEMP_FOLDER,
+                        getExternalFilesDir("Temp")!!.absolutePath
+                    )
+                    Operations.defaultBackup(
+                        this@MainActivity,
+                        getExternalFilesDir("Temp")!!.absolutePath,
+                        "Default Backup"
+                    )
+
+                }
             }
         }
     }
@@ -201,6 +253,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         builder.setMessage(msg)
         builder.setPositiveButton(android.R.string.ok) { _, _ -> finish() }
         builder.show()
+    }
+
+    private fun createNotificationChannel() {
+
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(
+            Constants.NOTIFICATION_CHANNEL_ID,
+            Constants.NOTIFICATION_CHANNEL_NAME,
+            importance
+        ).apply {
+            description = Constants.NOTIFICATION_CHANNEL_DESCRIPTION
+        }
+
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     private fun collapseBottomAppBar() {
